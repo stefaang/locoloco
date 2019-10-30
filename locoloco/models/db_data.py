@@ -1,14 +1,14 @@
 import json
 import random
 
-from myapp.models.db_orm import db
+from locoloco.models.db_orm import db
 
-from myapp.models.db_models import User
-from myapp.models.db_models import Country
-from myapp.models.db_models import DistributionCenter
-from myapp.models.db_models import StoreStatus
-from myapp.models.db_models import Store
-from myapp.models.db_models import StoreComponent
+from locoloco.models.db_models import User
+from locoloco.models.db_models import Country
+from locoloco.models.db_models import DistributionCenter
+from locoloco.models.db_models import StoreStatus
+from locoloco.models.db_models import Store
+from locoloco.models.db_models import StoreComponent
 
 
 # For demo purposes we are only generating about 10 stores:
@@ -31,7 +31,7 @@ def load_users_from_json():
         for user in json_object['users']:
             # Each user is a dict
             users.append(User(
-                provider='myapp',
+                provider='locoloco',
                 social_id=User.generate_social_id(),
                 email_address=user.get('email_address'),
                 password=user.get('password'))

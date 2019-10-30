@@ -14,7 +14,7 @@ export OAUTHLIB_INSECURE_TRANSPORT=1
 export OAUTHLIB_RELAX_TOKEN_SCOPE=1
 export DEBUG=1
 
-echo 'Starting myapp'
+echo 'Starting locoloco'
 
 # Python Virtual Environment using Pipenv
 pipenv run flask db_create

@@ -4,9 +4,9 @@ import string
 from sqlalchemy.sql import func
 from flask_login import UserMixin
 
-from myapp.models.db_orm import db
+from locoloco.models.db_orm import db
 
-from myapp.utils.argon2 import generate_argon2_hash, check_argon2_hash
+from locoloco.utils.argon2 import generate_argon2_hash, check_argon2_hash
 
 
 # TODO: review if indexes are created with PK, add others if needed as well
@@ -58,7 +58,7 @@ class User(UserMixin, db.Model):
 
     def generate_social_id(size=20, chars=string.digits):
         """
-        Generates a social_id that can be used for local myapp users.
+        Generates a social_id that can be used for local locoloco users.
         It's big enough so that it should be unique.
 
         Returns:

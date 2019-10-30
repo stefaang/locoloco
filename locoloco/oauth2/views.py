@@ -6,8 +6,8 @@ from .forms import SignInForm
 from .oauth2client import OAuth2Client
 
 
-from myapp.models.db_orm import db
-from myapp.models.db_models import User
+from locoloco.models.db_orm import db
+from locoloco.models.db_models import User
 
 
 # http://localhost:5000/oauth2/sign-in

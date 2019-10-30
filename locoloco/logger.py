@@ -6,7 +6,7 @@ from datetime import datetime
 def setup_logging(config_name):
     """
     Sets up logging to console (INFO+) and logging of log file
-    logs/myapp-<timestamp>.log. You can create a an extra logger to represent
+    logs/locoloco-<timestamp>.log. You can create a an extra logger to represent
     areas in your app: logger1 = logging.getLogger('area1')
 
     Logging Levels:
@@ -43,7 +43,7 @@ def setup_logging(config_name):
         log_lvl_file = 'INFO'
 
     # Set up logging to a file (overwriting)
-    log_filename = ('logs/myapp-{}.log'.format(datetime.utcnow().strftime(
+    log_filename = ('logs/locoloco-{}.log'.format(datetime.utcnow().strftime(
         "%Y%m%d")))
     # Possibly use %(pathname)s:%(lineno)d
     logging.basicConfig(format='%(asctime)s.%(msecs)03d - %(name)-12s - '

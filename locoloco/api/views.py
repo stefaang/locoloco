@@ -2,12 +2,12 @@ from flask import jsonify, render_template
 
 from . import api
 
-from myapp.models.db_models import User
-from myapp.models.db_models import Country
-from myapp.models.db_models import DistributionCenter
-from myapp.models.db_models import StoreStatus
-from myapp.models.db_models import Store
-from myapp.models.db_models import StoreComponent
+from locoloco.models.db_models import User
+from locoloco.models.db_models import Country
+from locoloco.models.db_models import DistributionCenter
+from locoloco.models.db_models import StoreStatus
+from locoloco.models.db_models import Store
+from locoloco.models.db_models import StoreComponent
 
 
 # http://localhost:5000/api

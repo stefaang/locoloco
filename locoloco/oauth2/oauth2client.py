@@ -3,7 +3,7 @@ import hashlib
 
 from flask import current_app, flash, redirect, session, url_for
 
-from myapp import oauth
+from locoloco import oauth
 
 
 # A great introduction to OAuth 2.0 can be found at https://www.oauth.com

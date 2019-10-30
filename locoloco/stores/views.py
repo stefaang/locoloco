@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
-from myapp.models.db_orm import db
+from locoloco.models.db_orm import db
 
 from . import stores
 from .forms import StoreForm
@@ -10,11 +10,11 @@ from .forms import AddStoreForm
 from .forms import EditStoreForm
 from .forms import DeleteStoreForm
 
-from myapp.models.db_models import Country
-from myapp.models.db_models import DistributionCenter
-from myapp.models.db_models import StoreStatus
-from myapp.models.db_models import Store
-from myapp.models.db_models import StoreComponent
+from locoloco.models.db_models import Country
+from locoloco.models.db_models import DistributionCenter
+from locoloco.models.db_models import StoreStatus
+from locoloco.models.db_models import Store
+from locoloco.models.db_models import StoreComponent
 
 
 # http://localhost:5000/stores

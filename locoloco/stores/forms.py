@@ -2,10 +2,10 @@ from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
-from myapp.models.db_models import Store
-from myapp.models.db_models import Country
-from myapp.models.db_models import DistributionCenter
-from myapp.models.db_models import StoreStatus
+from locoloco.models.db_models import Store
+from locoloco.models.db_models import Country
+from locoloco.models.db_models import DistributionCenter
+from locoloco.models.db_models import StoreStatus
 
 
 # Query Factories - they need to return queries, not results

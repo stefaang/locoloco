@@ -3,7 +3,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from flask_oauthlib.client import OAuth
 
-from myapp.models.db_models import User
+from locoloco.models.db_models import User
 
 
 # Flask-DebugToolbar

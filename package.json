@@ -1,5 +1,5 @@
 {
-  "name": "vue_app",
+  "name": "vue_kingler",
   "version": "1.19.1",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "lodash": "^4.17.15",
     "lodash.camelcase": "^4.3.0",
     "mapbox-gl": "^1.5.0",
-    "vue": "^2.5.13",
+    "vue": "^2.6.10",
     "vue-mapbox": "^0.4.1",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
@@ -29,7 +29,7 @@
     "lint-staged": "^9.4.2",
     "lodash.assign": "^4.2.0",
     "node-sass": "^4.7.2",
-    "sass-loader": "^6.0.6",
+    "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.10",
     "vuepress": "^1.2.0"
   },
@@ -54,11 +54,6 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },

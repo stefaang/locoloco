@@ -1,12 +1,11 @@
 """ pytests for Flask """
 
 import pytest
-from app import app
+from app import create_app
 
 
-@pytest.fixture(scope="module")
-def client():
-    app.config['TESTING'] = True
+def setup_module():
+    app = create_app('test')
     return app.test_client()
 
 

@@ -5,7 +5,6 @@ See `.flaskenv` for default settings.
  """
 
 import os
-from app import app
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -33,8 +32,13 @@ class Config(object):
     REDIS_URL = os.getenv('REDIS_URL', '')
     REDIS_CHAN = 'chat'
 
-    CELERY_BROKER_URL = os.getenv('CELERY_BROKER',)
-    CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER',)
+    CELERY_CONFIG = {
+        'BROKER_URL': os.getenv('CELERY_BROKER', 'redis://'),
+        'RESULT_BACKEND': os.getenv('CELERY_BROKER', 'redis://'),
+    }
+
+    SOCKETIO_MESSAGE_QUEUE = os.getenv('SOCKETIO_MESSAGE_QUEUE',
+                                       os.getenv('CELERY_BROKER', 'redis://'))
 
 
 class ProductionConfig(Config):
@@ -53,6 +57,15 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    CELERY_CONFIG = {
+        'BROKER_URL': os.getenv('CELERY_BROKER', 'redis://'),
+        'RESULT_BACKEND': os.getenv('CELERY_BROKER', 'redis://'),
+        'ALWAYS_EAGER': True,
+    }
 
 
-app.config.from_object('app.config.Config')
+config = {
+    'dev': DevelopmentConfig,
+    'prod': ProductionConfig,
+    'test': TestingConfig
+}

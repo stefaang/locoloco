@@ -2,6 +2,7 @@
 .cache
 .mypy_cache\
 .env
+venv
 
 /dist
 .coverage

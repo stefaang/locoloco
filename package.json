@@ -1,6 +1,6 @@
 {
   "name": "vue_app",
-  "version": "0.1.0",
+  "version": "1.19.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -9,24 +9,37 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
+    "lodash": "^4.17.15",
+    "lodash.camelcase": "^4.3.0",
+    "mapbox-gl": "^1.5.0",
     "vue": "^2.5.13",
+    "vue-mapbox": "^0.4.1",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yarn": "^1.19.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@vue/cli-plugin-babel": "^4.0.5",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
-    "@vue/cli-service": "^3.0.0-beta.6",
+    "@vue/cli-service": "^4.0.5",
     "@vue/eslint-config-standard": "^3.0.0-beta.6",
-    "lint-staged": "^6.0.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "lodash.assign": "^4.2.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
-    "vue-template-compiler": "^2.5.13"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.2.0"
   },
   "babel": {
     "presets": [
+      "@babel/preset-env",
       "@vue/app"
+    ],
+    "plugins": [
+      "@babel/plugin-syntax-dynamic-import"
     ]
   },
   "eslintConfig": {

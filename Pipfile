@@ -10,6 +10,7 @@ python-dotenv = "*"
 flask = "*"
 flask-mongoengine = "*"
 flask-script = "*"
+flask-security-too = "*"
 celery = "*"
 
 [dev-packages]

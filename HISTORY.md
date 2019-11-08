@@ -1,3 +1,7 @@
+### 0.4
+* Use unix line endings
+*
+
 ### 0.3.0.post1
 * Updated Dependencies and Docs (#17)
 

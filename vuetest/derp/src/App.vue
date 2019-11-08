@@ -5,18 +5,15 @@
       <router-link to="/api">API Sample</router-link> |
       <router-link to="/game">Game</router-link>
     </div>
-    <div id="logos">
-      <p>
-        <img src="@/assets/vue-logo.png">
-        <span id="plus">+</span>
-        <img src="@/assets/flask-logo.png">
-      </p>
-    </div>
+
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
+
+  @import './assets/css/mapbox-gl.css';
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

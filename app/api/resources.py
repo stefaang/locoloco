@@ -5,15 +5,14 @@ http://flask-restplus.readthedocs.io
 
 from datetime import datetime
 from flask import request
-from flask_restplus import Resource
-
-from .security import require_auth
+from flask_restplus import Resource, Namespace
+from flask_security import login_required
 from . import api_rest
 
 
 class SecureResource(Resource):
     """ Calls require_auth decorator on all requests """
-    method_decorators = [require_auth]
+    method_decorators = [login_required]
 
 
 @api_rest.route('/resource/<string:resource_id>')

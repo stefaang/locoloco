@@ -1,8 +1,9 @@
 import os
-from flask import Flask, current_app, send_file
+from flask import Flask, current_app, send_file, url_for
 
 from flask_mongoengine import MongoEngine
 from flask_socketio import SocketIO
+from flask_security import Security, MongoEngineUserDatastore
 from celery import Celery
 
 from .config import config
@@ -10,6 +11,11 @@ from .config import config
 # Flask extensions
 db = MongoEngine()
 socketio = SocketIO()
+
+from app.models.user import User, Role
+user_datastore = MongoEngineUserDatastore(db, User, Role)
+security = Security()
+
 celery = Celery(__name__,
                 broker=os.environ.get('CELERY_BROKER_URL', 'redis://'),
                 backend=os.environ.get('CELERY_BROKER_URL', 'redis://'))
@@ -19,11 +25,17 @@ celery.config_from_object('celeryconfig')
 def create_app(config_name=None, main=True):
     if config_name is None:
         config_name = os.getenv('LOCOLOCO_CONFIG', 'dev')
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../dist/static')
     app.config.from_object(config[config_name])
 
     # Initialize flask extensions
     db.init_app(app)
+    security.init_app(app, user_datastore)
+
+    # Create a user to test with
+    @app.before_first_request
+    def create_user():
+        user_datastore.create_user(email='stefaang@gmail.com', password='password')
 
     if main:
         # Initialize socketio server and attach it to the message queue, so

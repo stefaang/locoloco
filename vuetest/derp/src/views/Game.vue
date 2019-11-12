@@ -5,7 +5,7 @@
             :center="mapCenter"
             :zoom="defaultZoom"
             :dragRotate=false
-            @load="onMapLoad">
+            @load="onMapLoaded">
       <MglNavigationControl :showZoom="true" :showCompass="false" />
 
     </MglMap>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 import Mapbox from 'mapbox-gl'
 import { MglMap, MglNavigationControl } from 'vue-mapbox'
 
@@ -23,15 +24,14 @@ export default {
   },
   data () {
     return {
-      accessToken: process.env.VUE_APP_MAPBOX_TOKEN, // your access token. Needed if you using Mapbox maps
+      accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
       defaultZoom: 12,
       mapCenter: [3.735, 51.015],
-      mapStyle: 'mapbox://styles/mapbox/streets-v9' // your map style
-
+      mapStyle: 'mapbox://styles/mapbox/streets-v9'
     }
   },
   methods: {
-    async onMapLoad(event) {
+    async onMapLoaded(event) {
     // Actions to run when the map is loaded
       const asyncActions = event.component.actions
 
@@ -48,14 +48,13 @@ export default {
     this.mapbox = Mapbox
   }
 }
+
 </script>
 
 <style scoped lang="scss">
 
-  /*@import '../assets/css/mapbox-gl.css';*/
   #map {
     padding: 30px;
-    width: 100%;
     height: 500px;
   }
 

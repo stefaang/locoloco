@@ -12,8 +12,6 @@
 
 <style lang="scss">
 
-  @import './assets/css/mapbox-gl.css';
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,13 +28,6 @@
       color: #42b983;
     }
   }
-}
-#plus {
-  padding: 0 20px 0 20px;
-  display: inline-block;
-  font-size: 50px;
-  vertical-align: top;
-  line-height: 100px;
 }
 
 </style>

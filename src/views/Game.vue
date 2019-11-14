@@ -1,26 +1,84 @@
 <template>
-  <MglMap :accessToken="accessToken"
-          :mapStyle="mapStyle"/>
+  <div class="block md:flex" id="map">
+    <div class="flex md:inline-block bg-gray-200 md:bg-gray-400">
+      <label class="hidden md:block rounded-lg md:w-40 md:h-40 px-4 py-2 m-2 bg-gray-100">Picture</label>
+      <label class="flex-1 md:block rounded-lg md:w-40 px-4 py-2 m-2">User</label>
+      <label class="flex-1 md:block rounded-lg md:w-40 px-4 py-2 m-2">Team</label>
+      <label class="flex-1 md:block rounded-lg md:w-40 px-4 py-2 m-2">Score</label>
+      <button @click="loadMarkers"
+              class="hidden md:block rounded-lg md:w-40 px-4 py-2 m-2">Load markers</button>
+    </div>
+    <MglMap :accessToken="accessToken"
+            :mapStyle="mapStyle"
+            :center="mapCenter"
+            :zoom="defaultZoom"
+            :dragRotate=false
+            @load="onMapLoaded">
+    <MglNavigationControl :showZoom="true" :showCompass="false" />
+
+    </MglMap>
+  </div>
 </template>
 
 <script>
+
 import Mapbox from 'mapbox-gl'
-import { MglMap } from 'vue-mapbox'
+import { MglMap, MglNavigationControl } from 'vue-mapbox'
+import $backend from '../backend'
 
 export default {
   components: {
-    MglMap
+    MglMap,
+    MglNavigationControl
   },
   data () {
     return {
-      accessToken: 'pk.eyJ1IjoidGhnaCIsImEiOiJjaXdlMTJiczkwMDZ6MnRvNmdjODNmOTBlIn0.8aeMZVbu2uuPDXKcpDmZVw', // your access token. Needed if you using Mapbox maps
-      mapStyle: 'mapbox://styles/mapbox/streets-v9' // your map style
+      accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
+      defaultZoom: 12,
+      mapCenter: [3.735, 51.015],
+      mapStyle: 'mapbox://styles/mapbox/streets-v9',
+      resources: []
     }
   },
+  methods: {
+    async onMapLoaded(event) {
+    // Actions to run when the map is loaded
+      const asyncActions = event.component.actions
 
+      const newParams = await asyncActions.flyTo({
+        zoom: 16,
+        pitch: 45,
+        speed: 1
+      })
+      console.log(newParams)
+    },
+    loadMarkers() {
+      $backend.fetchResource()
+        .then(responseData => {
+          this.resources.push(responseData)
+        }).catch(error => {
+          this.error = error.message
+        })
+    }
+  },
   created () {
     // We need to set mapbox-gl library here in order to use it in template
     this.mapbox = Mapbox
+  },
+  mounted () {
+
   }
 }
+
 </script>
+
+<style scoped lang="scss">
+
+  #map {
+    padding: 10px;
+    height: 30em;
+  }
+
+</style>
+
+

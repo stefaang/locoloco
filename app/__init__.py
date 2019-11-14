@@ -25,7 +25,7 @@ celery.config_from_object('celeryconfig')
 def create_app(config_name=None, main=True):
     if config_name is None:
         config_name = os.getenv('LOCOLOCO_CONFIG', 'dev')
-    app = Flask(__name__, static_folder='../vuetest/derp/dist')
+    app = Flask(__name__, static_url_path='', static_folder='../dist')
     app.config.from_object(config[config_name])
 
     # Initialize flask extensions

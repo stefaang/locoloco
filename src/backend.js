@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 let $axios = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:5000/api',
+  // baseURL: '/api',
   timeout: 5000,
   headers: { 'Content-Type': 'application/json' }
 })
@@ -25,7 +26,12 @@ $axios.interceptors.response.use(function (response) {
 export default {
 
   async fetchResource () {
-    return $axios.get('/resource/xxx')
+    return $axios.get('/racer/xxx')
+      .then(response => response.data)
+  },
+
+  async fetchMarkers () {
+    return $axios.get('/marker')
       .then(response => response.data)
   },
 

@@ -8,7 +8,7 @@ from flask import request
 from flask_restplus import Resource, Namespace
 from flask_security import login_required
 from . import api_rest
-
+import random
 
 class SecureResource(Resource):
     """ Calls require_auth decorator on all requests """
@@ -35,3 +35,24 @@ class SecureResourceOne(SecureResource):
     def get(self, resource_id):
         timestamp = datetime.utcnow().isoformat()
         return {'timestamp': timestamp}
+
+@api_rest.route('/racer/<string:resource_id>')
+class Racer(Resource):
+    """Racer entity"""
+
+    def get(self, resource_id):
+        color = random.choice(['red', 'blue', 'orange'])
+        return {'id': resource_id, 'lng': 3.735+0.001*random.random(), 'lat': 51.015+0.0007*random.random(), 'color': color}
+
+@api_rest.route('/marker')
+class Racer(Resource):
+    """Racer entity"""
+
+    def get(self):
+        # TODO
+        return [{
+            'id': f'marker-{i}',
+            'lng': 3.735+0.001*random.random(),
+            'lat': 51.015+0.0007*random.random(),
+            'color': ['red', 'blue', 'orange'][i]
+            } for i in range(3)]

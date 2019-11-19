@@ -14,8 +14,33 @@
             :zoom="defaultZoom"
             :dragRotate=false
             @load="onMapLoaded">
-    <MglNavigationControl :showZoom="true" :showCompass="false" />
+      <MglNavigationControl :showZoom="true" :showCompass="false" />
 
+      <MglMarker
+					v-for="marker in payload"
+					:coordinates="[marker.lng, marker.lat]"
+					:draggable="true"
+					:color.sync="marker.color"
+					:markerId="marker.id"
+					:key="marker.id + '-' + marker.color"
+					ref="markers"
+			>
+        <MglPopup>
+          <div class="flex items-center">
+            <span
+              class="text-xs inline-flex items-center justify-center p-3 mr-2 w-4 h-4 rounded-full"
+              :class="{
+                'bg-teal-800 text-teal-100': markerColor == 'blue',
+                'bg-red-800 text-red-100': markerColor == 'red',
+              }"
+            >
+              {{ marker.id }}
+            </span>
+            <span class="text-sm">{{ marker.color }}</span>
+          </div>
+        </MglPopup>
+        <!-- @click="markerClicked" -->
+      </MglMarker>
     </MglMap>
   </div>
 </template>
@@ -23,21 +48,24 @@
 <script>
 
 import Mapbox from 'mapbox-gl'
-import { MglMap, MglNavigationControl } from 'vue-mapbox'
+import { MglMap, MglNavigationControl, MglMarker, MglPopup } from 'vue-mapbox'
 import $backend from '../backend'
 
 export default {
   components: {
     MglMap,
-    MglNavigationControl
+    MglMarker,
+    MglNavigationControl,
+    MglPopup
   },
   data () {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
       defaultZoom: 12,
       mapCenter: [3.735, 51.015],
-      mapStyle: 'mapbox://styles/mapbox/streets-v9',
-      resources: []
+      mapStyle: 'mapbox://styles/mapbox/streets-v11',
+      payload: [],
+      markerColor: 'blue',
     }
   },
   methods: {
@@ -51,15 +79,67 @@ export default {
         speed: 1
       })
       console.log(newParams)
+      // track position
+      setInterval(this.loadMarkers, 3000)
+      //
     },
-    loadMarkers() {
-      $backend.fetchResource()
-        .then(responseData => {
-          this.resources.push(responseData)
+
+    animateMarkers(timestamp) {
+      const duration = 2000
+      if (!this.start) this.start = timestamp
+      let progress = timestamp - this.start
+      // update markers
+      this.payload.forEach(
+        (marker, index) => {
+          if (!marker.anim) return
+          marker.lng = (progress/duration)*marker.anim.newLng + (1-progress/duration)*marker.anim.oldLng
+          marker.lat = (progress/duration)*marker.anim.newLat + (1-progress/duration)*marker.anim.oldLat
+          this.payload.splice(index, 1, marker)
+        }
+      )
+      // schedule next frame
+      if (progress < duration) {
+        requestAnimationFrame(this.animateMarkers)
+      } else {
+        this.start = null
+        this.payload.forEach(
+          marker => {
+            marker.anim = null
+          }
+        )
+      }
+    },
+
+    async loadMarkers() {
+      $backend.fetchMarkers()
+        .then(markerData => {
+          markerData.forEach(marker => {
+            let mIndex = this.payload.findIndex(m => m.id == marker.id)
+
+            if (mIndex > -1) {
+              // Update existing marker
+              let origMarker = this.payload[mIndex]
+              marker.anim = {
+                oldLng: origMarker.lng,
+                oldLat: origMarker.lat,
+                newLng: marker.lng,
+                newLat: marker.lat
+              }
+              marker.lng = marker.anim.oldLng
+              marker.lat = marker.anim.oldLat
+              this.payload.splice(mIndex, 1, marker)
+            } else {
+              // Add new marker
+              this.payload.push(marker)
+            }
+          })
+          requestAnimationFrame(this.animateMarkers)
         }).catch(error => {
           this.error = error.message
-        })
+      });
+
     }
+
   },
   created () {
     // We need to set mapbox-gl library here in order to use it in template

@@ -4,6 +4,7 @@ from flask import Flask, current_app, send_file, url_for
 from flask_mongoengine import MongoEngine
 from flask_socketio import SocketIO
 from flask_security import Security, MongoEngineUserDatastore
+from flask_cors import CORS
 from celery import Celery
 
 from .config import config
@@ -21,6 +22,7 @@ celery = Celery(__name__,
                 backend=os.environ.get('CELERY_BROKER_URL', 'redis://'))
 celery.config_from_object('celeryconfig')
 
+cors = CORS(resources={r"/api/*": {"origins": "http://127.0.0.1:8080"}})
 
 def create_app(config_name=None, main=True):
     if config_name is None:
@@ -52,6 +54,8 @@ def create_app(config_name=None, main=True):
                           message_queue=app.config['SOCKETIO_MESSAGE_QUEUE'],
                           async_mode='threading')
     celery.conf.update(config[config_name].CELERY_CONFIG)
+
+    cors.init_app(app)
 
     # Register web application routes
     from .main import main_bp

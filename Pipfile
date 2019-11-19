@@ -11,6 +11,7 @@ flask = "*"
 flask-mongoengine = "*"
 flask-script = "*"
 flask-security-too = "*"
+flask-cors = "*"
 celery = "*"
 
 [dev-packages]

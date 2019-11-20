@@ -1,7 +1,7 @@
 <template>
   <div class="block md:flex" id="map">
-    <div class="flex md:inline-block bg-gray-200 md:bg-gray-400">
-      <label class="hidden md:block rounded-lg md:w-40 md:h-40 px-4 py-2 m-2 bg-gray-100">Picture</label>
+    <div class="flex md:inline-block bg-teal-500 md:bg-teal-600">
+      <label class="hidden md:block rounded-lg md:w-40 md:h-40 px-4 py-2 m-2 bg-teal-400">Picture</label>
       <label class="flex-1 md:block rounded-lg md:w-40 px-4 py-2 m-2">User</label>
       <label class="flex-1 md:block rounded-lg md:w-40 px-4 py-2 m-2">Team</label>
       <label class="flex-1 md:block rounded-lg md:w-40 px-4 py-2 m-2">Score</label>
@@ -63,7 +63,8 @@ export default {
       accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
       defaultZoom: 12,
       mapCenter: [3.735, 51.015],
-      mapStyle: 'mapbox://styles/mapbox/streets-v11',
+      //mapStyle: 'mapbox://styles/mapbox/streets-v11',
+      mapStyle: 'mapbox://styles/-tfl-/ck37epmab0r691do0chi3f0o3',
       payload: [],
       markerColor: 'blue',
     }
@@ -80,12 +81,12 @@ export default {
       })
       console.log(newParams)
       // track position
-      setInterval(this.loadMarkers, 3000)
+      setTimeout(this.loadMarkers, 3000)
       //
     },
 
     animateMarkers(timestamp) {
-      const duration = 2000
+      const duration = 3000
       if (!this.start) this.start = timestamp
       let progress = timestamp - this.start
       // update markers
@@ -107,6 +108,7 @@ export default {
             marker.anim = null
           }
         )
+        this.loadMarkers()
       }
     },
 
@@ -119,6 +121,8 @@ export default {
             if (mIndex > -1) {
               // Update existing marker
               let origMarker = this.payload[mIndex]
+              if (origMarker.lng == marker.lng && origMarker.lat == marker.lat) return
+
               marker.anim = {
                 oldLng: origMarker.lng,
                 oldLat: origMarker.lat,
@@ -127,6 +131,7 @@ export default {
               }
               marker.lng = marker.anim.oldLng
               marker.lat = marker.anim.oldLat
+              this.start = null
               this.payload.splice(mIndex, 1, marker)
             } else {
               // Add new marker

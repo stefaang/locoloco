@@ -52,7 +52,7 @@ class Racer(Resource):
         # TODO
         return [{
             'id': f'marker-{i}',
-            'lng': 3.735+0.001*random.random(),
-            'lat': 51.015+0.0007*random.random(),
-            'color': ['red', 'blue', 'orange'][i]
-            } for i in range(3)]
+            'lng': 3.735+0.004*random.random(),
+            'lat': 51.015+0.002*random.random(),
+            'color': ['red', 'blue', 'orange'][i % 3]
+            } for i in range(20)]

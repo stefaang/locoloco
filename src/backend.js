@@ -15,7 +15,7 @@ $axios.interceptors.request.use(function (config) {
 
 // Response Interceptor to handle and log errors
 $axios.interceptors.response.use(function (response) {
-  console.log(response.data)
+  //console.log(response.data)
   return response
 }, function (error) {
   // Handle Error
